@@ -1,144 +1,93 @@
-import { getActivity, getCompliment, getJoke } from "./api"
+const displayedMessage = document.querySelector('.text') // this is where the text will be shown on the webpage
+const reloadButton = document.querySelector('button')
+const tabs = document.querySelectorAll('li')
+let currentType = document.querySelector('.active').dataset.type // this tells what type of message should be displayed
 
-const messages = {
-    _compliments: [
-        'You have a great sense of humor', 
-        'You have impeccable manners', 
-        'Is that your picture next to "charming" in the dictionary?', 
-        'You are beautiful on the inside and outside', 
-        'You were cool way before hipsters were cool', 
-        'That thing you don\'t like about yourself is what makes you really interesting', 
-        'You\'re inspiring', 
-        'I bet you do crossword puzzles in ink', 
-        'You\'re an awesome friend', 
-        'You look great today', 
-        'That color is perfect on you', 
-        'Has anyone ever told you that you have great posture?', 
-        'You\'re one of a kind', 
-        'In high school, I bet you were voted "most likely to continue being awesome"', 
-        'You look so young!', 
-        'You are stunning', 
-        'You are one of the bravest people I know'
-    ],
-    get compliments () {
-        return this._compliments
-    },
-    _fortunes: [ // Disclaimer, these predictions are for entertainment purposes and should not be taken seriously
-        // affirmative answers
-        'It is certain',
-        'Without a doubt',
-        'You may rely on it',
-        'Most likely',
-        'Outcome is good',
-        'Yes',
-        //neutral answers
-        'Reply hazy, try again',
-        'Ask again later',
-        'Better not tell you now',
-        'Cannot predict now',
-        'Concentrate and ask again',
-        // negative answers
-        'Don\'t count on it',
-        'My reply is no',
-        'My sources say no',
-        'Very doubtful',
-        'Outlook not so good'
-    ],
-    get fortunes () {
-        return this._fortunes
-    },
-    _activities: [
-        'Make homemade ice cream',
-        'Do something you used to do as a kid',
-        'Wash your car',
-        'Uninstall unused apps from your devices',
-        'Watch a movie you\'d never usually watch',
-        'Wash the dishes',
-        'Try a food you don\'t like',
-        'Research a topic you\'re interested in',
-        'Learn a new programing language',
-        'Write a short story'
-    ],
-    get activities () {
-        return this._activities
-    },
-    _quotes: [
-        {
-            author: 'Mahatma Gandhi',
-            quote: 'Live as if you were to die tomorrow. Learn as if you were to live forever'
-        },
-        {
-            author: 'Friedrich Nietzsche',
-            quote: 'That which does not kill us makes us stronger'
-        },
-        {
-            author: 'Bernard M. Baruch',
-            quote: 'Be who you are and say what you feel, because those who mind don’t matter and those who matter don’t mind'
-        },
-        {
-            author: 'Albert Einstein',
-            quote: 'Strive not to be a success, but rather to be of value'
-        },
-        {
-            author: 'Maya Angelou', 
-            quote: 'I’ve learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel'
-        },
-        {
-            author: 'Amelia Earhart',
-            quote: 'The most difficult thing is the decision to act, the rest is merely tenacity'
-        },
-        {
-            author: 'Charles Swindoll',
-            quote: 'Life is 10% what happens to me and 90% of how I react to it'
-        },
-        {
-            author: 'Christopher Columbus',
-            quote: 'You can never cross the ocean until you have the courage to lose sight of the shore'
-        },
-        {
-            author: 'Unknown',
-            quote: 'You can’t fall if you don’t climb.  But there’s no joy in living your whole life on the ground'
-        },
-        {
-            author: 'Steve Jobs',
-            quote: 'The only way to do great work is to love what you do'
+// this section allows user to switch tabs
+tabs.forEach(tab => {
+    tab.addEventListener('click', event => {
+        // nothing will happen if the clicked tab is already active
+        if (!tab.classList.contains('active')) {
+            tab.classList.add('active')
+            currentType = event.target.dataset.type
+            displayedMessage.innerHTML = 'Loading...' // show loading text while fetching the API
+            displayMessage(currentType)
+            
+            // make sure only one tab is active at a time
+            let activeTabs = document.querySelectorAll('.active')
+            activeTabs.forEach(activeTab => {
+                if (activeTab !== event.target) {
+                    activeTab.classList.remove('active')
+                }
+            })
         }
-    ],
-    get quotes () {
-        return this._quotes
-    },
-    _jokes: [
-        'You sound like you could survive a zombie apocalypse :)', 
-        'Why can’t a bike stand on its own? It’s two tired', 
-        'I submitted ten puns to a pun contest hoping that one would win, but no pun in ten did', 
-        'I told my doctor that I broke my arm in two places. He told me to stop going to those places', 
-        'You don\'t need a parachute to go skydiving — you need a parachute to go skydiving twice', 
-        'A nurse told me, "Sorry for the wait!" I replied, "It\'s alright, I\'m patient"', 
-        'Working in a mirror factory is something I could totally see myself doing', 
-        'What do you call a cheese that’s not yours ... Nacho cheese!', 
-        'What’s orange and sounds like a parrot? ... A carrot', 
-        'Why does Humpty Dumpty love autumn? ... Because he always has a great fall', 
-        'Where do spaghetti and sauce go to dance? ... The meat ball', 
-        'When the bottle of Pepsi hit me, I didn\'t cry. It was a soft drink'
-    ],
-    get jokes () {
-        return this._jokes
-    },
-    random(messageType) { // this method works irrespective of the array length
-        // make sure the randomIndex isn't more than the indeces in the array
-        let max = this[messageType].length
-        let randomIndex = Math.floor(Math.random() * max)
+    })
+})
 
-        // return the random message based on the message type
-        return this[messageType][randomIndex]
+// show another random message when the reload button is clicked
+reloadButton.addEventListener('click', event => {
+    displayedMessage.innerHTML = 'Loading...' // show loading animation
+    displayMessage(currentType)
+})
+
+function displayMessage(type) {
+    switch(type) {
+        case 'compliment':
+            compliment()
+            break
+        case 'joke':
+            joke()
+            break
+        case 'quote':
+            activity()
+            break
     }
 }
 
-// list random messages of all message types
+function compliment() {
+    fetch('https://complimentr.com/api')
+    .then(res => res.json())
+    .then(data => displayedMessage.innerHTML = data.compliment)
+    .catch(error => console.error('Error: ' + error))
+}
 
-console.log('Compliment:', messages.random('compliments'))
-// console.log('Fortune:', messages.random('fortunes'))
-console.log('Activity:', messages.random('activities'))
-let quoteObj = messages.random('quotes')  // call the random method on quotes once so that the quote and author are of the same quote
-console.log('Quote:', quoteObj.quote + ' ~ ' + quoteObj.author)
-console.log('Joke:', messages.random('jokes'))
+function activity() {
+    fetch('https://www.boredapi.com/api/activity/')
+    .then(res => res.json())
+    .then(data => displayedMessage.innerHTML = data.activity)
+    .catch(error => console.error('Error: ' + error))
+}
+
+function quote() {
+    fetch('https://api.themotivate365.com/stoic-quote')
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error: ' + error))
+}
+
+function joke() {
+    const options = {
+        headers: {
+            'Accept':'application/json'
+        }
+    }
+
+    fetch('https://icanhazdadjoke.com/', options)
+    .then(res => res.json())
+    .then(data => displayedMessage.innerHTML = data.joke)
+    .catch(error => console.error('Error: ' + error))
+}
+
+function random() {
+    let max = this[quote].length
+    let randomIndex = Math.floor(Math.random() * max)
+
+    // return the random message based on the message type
+    return this[quote][randomIndex]
+}
+
+// browser should automatically display a message when loaded
+document.addEventListener('DOMContentLoaded', event => {
+    displayedMessage.innerHTML = 'Loading...'
+    displayMessage(currentType)
+})
