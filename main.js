@@ -38,7 +38,7 @@ function displayMessage(type) {
         case 'joke':
             joke()
             break
-        case 'quote':
+        case 'activity':
             activity()
             break
     }
