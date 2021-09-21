@@ -58,6 +58,20 @@ h1 {
     right: 20px;
 }
 
+#toggle-container::before {
+    content: "Dark Mode";
+    color: var(--text-color);
+    position: absolute;
+    width: 75px;
+    top: 50%;
+    left: 0;
+    transform: translate(calc(-100% - 10px), -50%);
+}
+
+.light #toggle-container::before {
+    content: "Light Mode";
+}
+
 #toggle-container:hover {
     cursor: pointer;
 }

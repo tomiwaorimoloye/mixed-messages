@@ -20,6 +20,7 @@ function setTheme(event) {
 
 function changeStyle() {
     let root = document.querySelector(':root')
+    
     if (currentTheme === 'dark') {
         root.style.setProperty('--background-color', '#1f2140')
         root.style.setProperty('--dark-blue', '#161932')
@@ -33,5 +34,4 @@ function changeStyle() {
         root.style.setProperty('--dark-blue', 'white')
         document.body.classList.add('light')
     }
-
 }
