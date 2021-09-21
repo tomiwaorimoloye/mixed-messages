@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: background-color 500ms, color 100ms;
 }
 
 :root {
@@ -10,7 +11,7 @@
 
     --background-color: #1f2140;
     --dark-blue: #161932;
-    --neon-blue: #77f0f6;
+    --highlight-color: #77f0f6;
     --text-color: #d9e3fe;
     --shadow: #242b58;
 }
@@ -84,7 +85,7 @@ main {
 }
 
 .options > ul li.active {
-    background-color: var(--neon-blue);
+    background-color: var(--highlight-color);
     color: var(--dark-blue);
     opacity: 1;
 }
@@ -163,7 +164,7 @@ p::first-letter {
     .redo button:hover {
         cursor: pointer;
         opacity: 1;
-        color: var(--neon-blue);
+        color: var(--highlight-color);
     }
 }
 
@@ -175,7 +176,7 @@ footer {
 
 footer a {
     text-decoration: none;
-    color: var(--neon-blue);
+    color: var(--highlight-color);
 }
 
 footer a:hover {
