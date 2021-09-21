@@ -15,10 +15,16 @@
 
     <title>Mixed Messages</title>
     <script src="./main.js" defer></script>
+    <script src="./theme.js" defer></script>
 </head>
 <body>
     <header>
         <h1>mixed messages</h1>
+
+        <div id="theme-toggle">
+            <button data-theme="light">Light Theme</button>
+            <button data-theme="dark" class="active">Dark Theme</button>
+        </div>
     </header>
 
     <main>
@@ -26,7 +32,7 @@
             <ul>
                 <li data-type="compliment">Compliments</li>
                 <li class="active" data-type="joke">Jokes</li>
-                <li data-type="activity">Activity</li>
+                <li data-type="quote">Quotes</li>
             </ul>
         </div>
 

@@ -1,7 +1,7 @@
 const displayedMessage = document.querySelector('.text') // this is where the text will be shown on the webpage
-const reloadButton = document.querySelector('button')
+const reloadButton = document.querySelector('.redo button')
 const tabs = document.querySelectorAll('li')
-let currentType = document.querySelector('.active').dataset.type // this tells what type of message should be displayed
+let currentType = document.querySelector('li.active').dataset.type // this tells what type of message should be displayed
 
 // this section allows user to switch tabs
 tabs.forEach(tab => {
@@ -38,8 +38,8 @@ function displayMessage(type) {
         case 'joke':
             joke()
             break
-        case 'activity':
-            activity()
+        case 'quote':
+            quote()
             break
     }
 }
@@ -59,9 +59,15 @@ function activity() {
 }
 
 function quote() {
-    fetch('https://api.themotivate365.com/stoic-quote')
+    const options = {
+        headers: {
+            'Accept': 'application/json'
+        }
+    }
+
+    fetch('https://goquotes-api.herokuapp.com/api/v1/random?count=1', options)
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => displayedMessage.innerHTML = data.quotes[0].text + '<br>~ ' + data.quotes[0].author)
     .catch(error => console.error('Error: ' + error))
 }
 
