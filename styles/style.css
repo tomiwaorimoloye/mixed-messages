@@ -3,7 +3,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    transition: background-color 500ms, color 100ms;
+    transition: background-color 300ms, color 100ms;
+    transition-timing-function: linear;
 }
 
 :root {
@@ -47,6 +48,8 @@ h1 {
     font-size: 3rem;
 }
 
+/* toggle */
+
 #toggle-container {
     width: 50px;
     height: 25px;
@@ -82,11 +85,12 @@ h1 {
     border-radius: 100%;
     background-color: var(--background-color);
     position: absolute;
+    transition-property: transform;
+    transition-timing-function: ease-out;
 }
 
 .light #toggle {
-    left: auto;
-    right: 2.5px;
+    transform: translateX(25px);
 }
 
 /* main */
