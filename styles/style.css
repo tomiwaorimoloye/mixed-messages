@@ -23,12 +23,17 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     text-align: center;
-    padding: 40px 10px;
+    padding: 40px 10px 20px;
 }
 
 @media only screen and (max-width: 700px) {
     :root {
         font-size: 12px;
+    }
+
+    body {
+        padding: 60px 10px 20px;
+        position: relative;
     }
 }
 
@@ -42,6 +47,33 @@ h1 {
     font-size: 3rem;
 }
 
+#toggle-container {
+    width: 50px;
+    height: 25px;
+    border-radius: 40px;
+    background-color: var(--highlight-color);
+    position: absolute;
+    padding: 2.5px;
+    top: 20px;
+    right: 20px;
+}
+
+#toggle-container:hover {
+    cursor: pointer;
+}
+
+#toggle {
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background-color: var(--background-color);
+    position: absolute;
+}
+
+.light #toggle {
+    left: auto;
+    right: 2.5px;
+}
 
 /* main */
 
