@@ -24,8 +24,14 @@ tabs.forEach(tab => {
     })
 })
 
+// browser should automatically display a message when loaded
+document.addEventListener('DOMContentLoaded', () => {
+    displayedMessage.innerHTML = 'Loading...'
+    displayMessage(currentType)
+})
+
 // show another random message when the reload button is clicked
-reloadButton.addEventListener('click', event => {
+reloadButton.addEventListener('click', () => {
     displayedMessage.innerHTML = 'Loading...' // show loading animation
     displayMessage(currentType)
 })
@@ -92,8 +98,3 @@ function random() {
     return this[quote][randomIndex]
 }
 
-// browser should automatically display a message when loaded
-document.addEventListener('DOMContentLoaded', event => {
-    displayedMessage.innerHTML = 'Loading...'
-    displayMessage(currentType)
-})
